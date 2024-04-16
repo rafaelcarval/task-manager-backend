@@ -65,6 +65,11 @@ Gerar as migrations
 ```sh
 php artisan migrate
 ```
+Criar a documentação swagger
+```sh
+php artisan l5-swagger:generate
+```
+
 
 Acessar o projeto - api Swagguer
 [http://localhost:8989/api/documentation](http://localhost:8989/api/documentation)
@@ -73,5 +78,6 @@ Testes unitários
 ```sh
 php artisan test
 ```
+
 
 Além dos testes unitários, disponibilizei via e-mail a collection do postman com testes completos
