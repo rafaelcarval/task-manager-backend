@@ -65,11 +65,16 @@ Gerar as migrations
 ```sh
 php artisan migrate
 ```
+
+Acessar o projeto - api Swagguer via auto scan
+[http://localhost:8989/api-docs-ui#/](http://localhost:8989/api/documentation)
+
+ou
+
 Criar a documentação swagger
 ```sh
 php artisan l5-swagger:generate
 ```
-
 
 Acessar o projeto - api Swagguer
 [http://localhost:8989/api/documentation](http://localhost:8989/api/documentation)
