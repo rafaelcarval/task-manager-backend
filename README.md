@@ -66,7 +66,7 @@ Gerar as migrations
 php artisan migrate
 ```
 
-Acessar o projeto - api Swagguer via auto scan
+Acessar o projeto - api Swagger via auto scan
 [http://localhost:8989/api-docs-ui#/](http://localhost:8989/api/documentation)
 
 ou
@@ -76,7 +76,7 @@ Criar a documentação swagger
 php artisan l5-swagger:generate
 ```
 
-Acessar o projeto - api Swagguer
+Acessar o projeto - api Swagger
 [http://localhost:8989/api/documentation](http://localhost:8989/api/documentation)
 
 Testes unitários
