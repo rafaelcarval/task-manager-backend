@@ -27,10 +27,11 @@ Route::post('/auth/login',          [UserController::class, 'loginUser']);
 
 Route::middleware(['auth:sanctum'])->group(function () {  
 
-    Route::post('/task',                    [TaskController::class, 'store']);
-    Route::get('/tasks',                    [TaskController::class, 'tasks']);
-    Route::post('/task/update',               [TaskController::class, 'update']);
-    Route::post('/task/{task}/finished',    [TaskController::class,'finished']);
+    Route::post('/task',                        [TaskController::class, 'store']);
+    Route::get('/tasks',                        [TaskController::class, 'tasks']);
+    Route::post('/tasksnetweendates',           [TaskController::class, 'tasksBetweenDates']);
+    Route::post('/task/update',                 [TaskController::class, 'update']);
+    Route::post('/task/{task}/finished',        [TaskController::class,'finished']);
 
     Route::put('/user/update',          [UserController::class, 'updateUser']);
     Route::get('/user',                 [UserController::class, 'user']);
