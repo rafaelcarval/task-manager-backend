@@ -2,7 +2,11 @@
     "openapi": "3.0.0",
     "info": {
         "title": "API TASK CALENDAR",
-        "version": "0.1"
+        "description": "Put Markdown Here [a Link](https://www.google.com)",
+        "contact": {
+            "email": "my@email"
+        },
+        "version": "1.0.0"
     },
     "paths": {
         "/api/task": {

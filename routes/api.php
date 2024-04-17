@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CommentController;
+use OpenApi\Generator;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,10 @@ use App\Http\Controllers\CommentController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+Route::get('/swagger.json', function () {
+    header('Content-Type: application/x-yaml');
+    return Generator::scan([ app_path(), ])->toJson();
+});
 
 Route::post('/auth/register',       [UserController::class, 'createUser']);
 Route::post('/auth/login',          [UserController::class, 'loginUser']);

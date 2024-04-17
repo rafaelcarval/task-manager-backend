@@ -45,28 +45,96 @@ class UserController extends Controller
      *                 example={"name": "Rafael", "email": "rafael.frotac@gmail.com", "password": "teste"}
      *             )
      *         )
-     *     ),
+     *     ),          
      *     @OA\Response(
-     *         response=200,
+     *         response="200",
      *         description="User Created Successfully",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status": true, "message": "User Created Successfully", "token": "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"}, summary="An result object."),
-     *         )
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="token",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "User Created Successfully",
+     *                         "token": "Bearer 8|KpIWQ5NCinZmPXszvViEJONX038iYaEQ4xzVT8hDe1b0d69e"
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
      *         response=400,
      *         description="Validation request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"validation error","errors":{"email":{"The email has already been taken."}}}, summary="An result object."),
-     *         )
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="validation error"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="errors",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": false,
+     *                         "message": "validation error",
+     *                         "errors":{"email":{"The email has already been taken."}}
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
-     *      @OA\Response(
-     *         response=500,
-     *         description="Invalid request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"Throwable errors"}, summary="An result object."),
-     *         )
-     *     )
+     *     @OA\Response(
+     *         response="500",
+     *         description="500 Internal Server Error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "SQLSTATE[23000]: Integrity ..."
+     *                     }
+     *                 )
+     *             )
+     *         }
+     *     ),
      * )
      */    
     public function createUser(Request $request)
@@ -97,7 +165,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => "Bearer " . $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {
@@ -136,32 +204,105 @@ class UserController extends Controller
      *         )
      *     ),
      *     @OA\Response(
-     *         response=200,
+     *         response="200",
      *         description="User Updated Successfully",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status": true, "message": "User Updated Successfully", "token": "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"}, summary="An result object."),
-     *         )
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="token",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "User Created Successfully",
+     *                         "token": "Bearer 8|KpIWQ5NCinZmPXszvViEJONX038iYaEQ4xzVT8hDe1b0d69e"
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
-     *         response=400,
-     *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"validation error","errors":{"email":{"The email has already been taken."}}}, summary="An result object."),
-     *         )
+     *         response="401",
+     *         description="401 Unauthorized",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "message": "Unauthenticated",
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
-     *         response=404,
+     *         response="404",
      *         description="User not found",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"User not found"}, summary="An result object."),
-     *         )
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": false,
+     *                         "message": "User not found"
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
-     *      @OA\Response(
-     *         response=500,
-     *         description="Invalid request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"Throwable errors"}, summary="An result object."),
-     *         )
+     *     @OA\Response(
+     *         response="500",
+     *         description="500 Internal Server Error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "SQLSTATE[23000]: Integrity ..."
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     )
      * )
      */    
@@ -183,6 +324,14 @@ class UserController extends Controller
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
+            }
+            $user = User::find($request->id);
+
+            if(is_null($user)){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found'
+                ], 400);
             }
 
             $user = User::updateOrCreate(
@@ -226,25 +375,86 @@ class UserController extends Controller
      *         )
      *     ),
      *     @OA\Response(
-     *         response=200,
-     *         description="User Logged In Successfully",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status": true, "message": "User Logged In Successfully", "token": "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"}, summary="An result object."),
-     *         )
+     *         response="200",
+     *         description="User Updated Successfully",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="token",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "User Logged In Successfully",
+     *                         "token": "Bearer 8|KpIWQ5NCinZmPXszvViEJONX038iYaEQ4xzVT8hDe1b0d69e"
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
-     *         response=401,
+     *         response="404",
      *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status": false, "message": "Email & Password does not match with our record."}, summary="An result object."),
-     *         )
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": false,
+     *                         "message": "Email & Password does not match with our record."
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
-     *      @OA\Response(
-     *         response=500,
-     *         description="Invalid request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"Throwable errors"}, summary="An result object."),
-     *         )
+     *     @OA\Response(
+     *         response="500",
+     *         description="500 Internal Server Error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "SQLSTATE[23000]: Integrity ..."
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     )
      * )
      */
@@ -277,7 +487,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => "Bearer " . $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {
@@ -296,31 +506,106 @@ class UserController extends Controller
      *     description="Para o retorno dos dados, deve-se autenticar e pegar o token gerado. Clicar no cadeado e colocar Bearer mais o token gerado no login. Ex: Bearer 12|KvkT1313lSelWBH5xXxokLYOhN38B3XsS3riNuLKcca49988",
      *     security={{"sanctum":{}}},
      *     @OA\Response(
-     *         response=200,
-     *         description="User Logged In Successfully",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"id":1,"name":"Rafael","email":"rafael.frotac@gmail.com","email_verified_at":null,"created_at":"2024-04-14T17:00:48.000000Z","updated_at":"2024-04-14T17:00:48.000000Z"}, summary="An result object."),
-     *         )
+     *         response="200",
+     *         description="Get User Successfully",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="token",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "User Logged In Successfully",
+     *                         "data": {
+     *                              "id": 5,
+     *                              "name": "Rafael",
+     *                              "email": "rafael.frotac@gmail.com",
+     *                              "email_verified_at": null,
+     *                              "created_at": "2024-04-16T23:58:14.000000Z",
+     *                              "updated_at": "2024-04-17T01:42:09.000000Z"
+     *                          }
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"message": "Unauthenticated."}, summary="An result object."),
-     *         )
+     *         response="401",
+     *         description="401 Unauthorized",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "message": "Unauthenticated",
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
-     *      @OA\Response(
-     *         response=500,
-     *         description="Invalid request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"Throwable errors"}, summary="An result object."),
-     *         )
+     *     @OA\Response(
+     *         response="500",
+     *         description="500 Internal Server Error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": false,
+     *                         "message": "Throwable errors ..."
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     )
      * )
      */
     public function user(Request $request)
     {
-        return $request->user();
+        try {
+            $user = $request->user();
+            return response()->json([
+                'status' => true,
+                'message' => 'Get User Successfully',
+                'data' => $user,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -330,30 +615,99 @@ class UserController extends Controller
      *     summary="Pegando todos os usuários cadastrados",
      *     security={{"sanctum":{}}},
      *     @OA\Response(
-     *         response=200,
-     *         description="Get all successfully",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"id":1,"name":"Rafael","email":"rafael.frotac@gmail.com","email_verified_at":null,"created_at":"2024-04-14T17:00:48.000000Z","updated_at":"2024-04-14T17:00:48.000000Z"}, summary="An result object."),
-     *         )
+     *         response="200",
+     *         description="Get User Successfully",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="token",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "status": true,
+     *                         "message": "User Logged In Successfully",
+     *                         "data": {{"id":5,"name":"Rafael","email":"rafael.frotac@gmail.com","email_verified_at":null,"created_at":"2024-04-16T23:58:14.000000Z","updated_at":"2024-04-17T01:42:09.000000Z"},{"id":6,"name":"Rafael","email":"rafael.frotac1@gmail.com","email_verified_at":null,"created_at":"2024-04-17T00:50:22.000000Z","updated_at":"2024-04-17T00:50:22.000000Z"},{"id":12,"name":"Rafael","email":"rafael.frotac2@gmail.com","email_verified_at":null,"created_at":"2024-04-17T01:30:38.000000Z","updated_at":"2024-04-17T01:30:38.000000Z"}}
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"message": "Unauthenticated."}, summary="An result object."),
-     *         )
+     *         response="401",
+     *         description="401 Unauthorized",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "message": "Unauthenticated",
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     ),
-     *      @OA\Response(
-     *         response=500,
-     *         description="Invalid request",
-     *         @OA\JsonContent(
-     *             @OA\Examples(example="result", value={"status":false,"message":"Throwable errors"}, summary="An result object."),
-     *         )
+     *     @OA\Response(
+     *         response="500",
+     *         description="500 Internal Server Error",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="status",
+     *                         type="bool",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     example={
+     *                         "status": false,
+     *                         "message": "Throwable errors ..."
+     *                     }
+     *                 )
+     *             )
+     *         }
      *     )
      * )
      */
     public function users()
     {
-        return $user = User::all();
+        
+        try {
+            $users = User::all();
+            return response()->json([
+                'status' => true,
+                'message' => 'Get Users Successfully',
+                'data' => $users,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }
