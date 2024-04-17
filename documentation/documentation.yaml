@@ -1,0 +1,806 @@
+{
+openapi: "3.0.0",
+info: {
+title: "API TASK CALENDAR",
+description: "Put Markdown Here [a Link](https://www.google.com)",
+contact: {
+email: "my@email"
+},
+version: "1.0.0"
+},
+paths: {
+/api/task: {
+post: {
+tags: [
+"Tarefas"
+],
+summary: "Criando nova tarefa",
+operationId: "752c97798f6581341105be3afd0d061a",
+requestBody: {
+content: {
+application/json: {
+schema: {
+required: [
+"assigneduser_id",
+"title",
+"description",
+"due",
+"completed"
+],
+properties: {
+name: {
+type: "string"
+},
+email: {
+type: "string"
+},
+password: {
+type: "string"
+}
+},
+type: "object",
+example: {
+assigneduser_id: 1,
+title: "New task",
+description: "loren impsum",
+due: "2024-04-11",
+completed: false
+}
+}
+}
+}
+},
+responses: {
+200: {
+description: "Task Created Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: true,
+message: "Task Created Successfully",
+task: {
+assigneduser_id: 1,
+title: "New task",
+description: "loren impsum",
+due: "2024-04-11",
+completed: 0,
+taskcreator_id: 1,
+updated_at: "2024-04-16T00:40:56.000000Z",
+created_at: "2024-04-16T00:40:56.000000Z",
+id: 8
+}
+}
+}
+}
+}
+}
+},
+400: {
+description: "Validation request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "validation error",
+errors: {
+fields: [
+"The assigneduser_id not found."
+]
+}
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+},
+/api/tasks: {
+get: {
+tags: [
+"Tarefas"
+],
+summary: "Pegando todas as tarefas",
+description: "Para o retorno dos dados, deve-se autenticar e pegar o token gerado. Clicar no cadeado e colocar Bearer mais o token gerado no login. Ex: Bearer 12|KvkT1313lSelWBH5xXxokLYOhN38B3XsS3riNuLKcca49988",
+operationId: "8549bd34c3368db59870d2aeb3e8fe2a",
+responses: {
+200: {
+description: "Get all successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+id: 1,
+taskcreator_id: 1,
+assigneduser_id: 1,
+title: "New task",
+description: "loren impsum",
+due: "2024-04-11 00:00:00",
+completed: 0,
+created_at: "2024-04-15T20:24:28.000000Z",
+updated_at: "2024-04-15T20:24:28.000000Z"
+}
+}
+}
+}
+}
+},
+401: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+message: "Unauthenticated."
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+},
+/api/task/update: {
+post: {
+tags: [
+"Tarefas"
+],
+summary: "Alterando uma tarefa",
+description: "Deve-se autenticar e pegar o token gerado. Clicar no cadeado e colocar Bearer mais o token gerado no login. Ex: Bearer 12|KvkT1313lSelWBH5xXxokLYOhN38B3XsS3riNuLKcca49988",
+operationId: "2c8ccc675a65ca5ffd6108eef6e08a7e",
+requestBody: {
+content: {
+application/json: {
+schema: {
+properties: {
+assigneduser_id: {
+type: "integer"
+},
+title: {
+type: "string"
+},
+description: {
+type: "string"
+},
+due: {
+type: "string",
+format: "date"
+}
+},
+type: "object",
+example: {
+assigneduser_id: 1,
+title: "New task",
+description: "loren impsum",
+due: "2024-04-12"
+}
+}
+}
+}
+},
+responses: {
+200: {
+description: "Task Updated Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: true,
+message: "Task Updated Successfully",
+task: {
+id: 1,
+taskcreator_id: 1,
+assigneduser_id: 1,
+title: "New task",
+description: "loren impsum",
+due: "2024-04-12",
+completed: 0,
+created_at: "2024-04-15T20:24:28.000000Z",
+updated_at: "2024-04-16T00:42:40.000000Z"
+}
+}
+}
+}
+}
+}
+},
+400: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "validation error",
+errors: {
+email: [
+"The email has already been taken."
+]
+}
+}
+}
+}
+}
+}
+},
+404: {
+description: "User not found",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "User not found"
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+},
+/api/task/{task}/finished: {
+post: {
+tags: [
+"Tarefas"
+],
+summary: "Close a task",
+operationId: "9985ae003eeef4f716afcc59963dd90d",
+parameters: [
+{
+name: "id",
+in: "path",
+description: "Id da task",
+required: true,
+schema: {
+type: "string"
+},
+examples: {
+int: {
+summary: "An int value.",
+value: "1"
+}
+}
+}
+],
+responses: {
+200: {
+description: "OK"
+}
+}
+}
+},
+/api/auth/register: {
+post: {
+tags: [
+"Usuários"
+],
+summary: "Criando novo usuário",
+operationId: "4c17905538fc1bed74d36e8bea5b3530",
+requestBody: {
+content: {
+application/json: {
+schema: {
+required: [
+"name",
+"email",
+"password"
+],
+properties: {
+name: {
+type: "string"
+},
+email: {
+type: "string"
+},
+password: {
+type: "string"
+}
+},
+type: "object",
+example: {
+name: "Rafael",
+email: "rafael.frotac@gmail.com",
+password: "teste"
+}
+}
+}
+}
+},
+responses: {
+200: {
+description: "User Created Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: true,
+message: "User Created Successfully",
+token: "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"
+}
+}
+}
+}
+}
+},
+400: {
+description: "Validation request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "validation error",
+errors: {
+email: [
+"The email has already been taken."
+]
+}
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+}
+}
+},
+/api/user/update: {
+put: {
+tags: [
+"Usuários"
+],
+summary: "Alterando um usuário",
+description: "Deve-se autenticar e pegar o token gerado. Clicar no cadeado e colocar Bearer mais o token gerado no login. Ex: Bearer 12|KvkT1313lSelWBH5xXxokLYOhN38B3XsS3riNuLKcca49988",
+operationId: "151eaa6ece3ae3fa9b6d8bb0d31a0b36",
+requestBody: {
+content: {
+application/json: {
+schema: {
+properties: {
+id: {
+type: "integer"
+},
+name: {
+type: "string"
+},
+email: {
+type: "string"
+}
+},
+type: "object",
+example: {
+id: 1,
+name: "Rafael",
+email: "rafael.frotac@gmail.com",
+password: "teste"
+}
+}
+}
+}
+},
+responses: {
+200: {
+description: "User Updated Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: true,
+message: "User Updated Successfully",
+token: "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"
+}
+}
+}
+}
+}
+},
+400: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "validation error",
+errors: {
+email: [
+"The email has already been taken."
+]
+}
+}
+}
+}
+}
+}
+},
+404: {
+description: "User not found",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "User not found"
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+},
+/api/auth/login: {
+post: {
+tags: [
+"Usuários"
+],
+summary: "Efetuando login",
+operationId: "fb94347c5d6f3fd09e44fd097320ca31",
+requestBody: {
+content: {
+application/json: {
+schema: {
+properties: {
+email: {
+type: "string"
+},
+password: {
+type: "string"
+}
+},
+type: "object",
+example: {
+email: "rafael.frotac@gmail.com",
+password: "teste"
+}
+}
+}
+}
+},
+responses: {
+200: {
+description: "User Logged In Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: true,
+message: "User Logged In Successfully",
+token: "1|cnThSUDvuQ0doEz0bhNmTtWKWFsu7MSESPQw2XaP74a03a98"
+}
+}
+}
+}
+}
+},
+401: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Email & Password does not match with our record."
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+}
+}
+},
+/api/user: {
+get: {
+tags: [
+"Usuários"
+],
+summary: "Pegando usuário logado",
+description: "Para o retorno dos dados, deve-se autenticar e pegar o token gerado. Clicar no cadeado e colocar Bearer mais o token gerado no login. Ex: Bearer 12|KvkT1313lSelWBH5xXxokLYOhN38B3XsS3riNuLKcca49988",
+operationId: "2130b7cce3aebae5b2f0aecd8f3cf0d3",
+responses: {
+200: {
+description: "User Logged In Successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+id: 1,
+name: "Rafael",
+email: "rafael.frotac@gmail.com",
+email_verified_at: null,
+created_at: "2024-04-14T17:00:48.000000Z",
+updated_at: "2024-04-14T17:00:48.000000Z"
+}
+}
+}
+}
+}
+},
+401: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+message: "Unauthenticated."
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+},
+/api/users: {
+get: {
+tags: [
+"Usuários"
+],
+summary: "Pegando todos os usuários cadastrados",
+operationId: "eb4778acaf6045bfd48b299b2997094f",
+responses: {
+200: {
+description: "Get all successfully",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+id: 1,
+name: "Rafael",
+email: "rafael.frotac@gmail.com",
+email_verified_at: null,
+created_at: "2024-04-14T17:00:48.000000Z",
+updated_at: "2024-04-14T17:00:48.000000Z"
+}
+}
+}
+}
+}
+},
+401: {
+description: "Validation error",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+message: "Unauthenticated."
+}
+}
+}
+}
+}
+},
+500: {
+description: "Invalid request",
+content: {
+application/json: {
+schema: { },
+examples: {
+result: {
+summary: "An result object.",
+value: {
+status: false,
+message: "Throwable errors"
+}
+}
+}
+}
+}
+}
+},
+security: [
+{
+sanctum: [ ]
+}
+]
+}
+}
+}
+}
