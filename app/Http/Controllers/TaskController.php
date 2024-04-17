@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
+
 
 class TaskController extends Controller
 {
@@ -471,12 +471,12 @@ class TaskController extends Controller
                 ], 401);
             }
 
-            $tasks = Task::whereBetween('created_at',[Carbon::parse($request->from)->format('Y-m-d 00:00:00'),Carbon::parse($request->to)->format('Y-m-d 23:59:59')])->get();
+            $tasks = new Task();
 
             return response()->json([
                 'status' => true,
                 'message' => 'Get all tasks Successfully',
-                'data' => $tasks,
+                'data' => $tasks->between($request),
             ], 200);
 
         } catch (\Throwable $th) {

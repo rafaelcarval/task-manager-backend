@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
+/**
+ * @OA\Schema()
+ */
 
 class Task extends Model
 {
@@ -36,6 +41,11 @@ class Task extends Model
                 ->orWhere('title','like', '%'. request('searchbody') .'%')
                 ->orWhere('description','like', '%'. request('searchbody') .'%');
         }
+    }
+
+    public function between($req)
+    {
+        return Task::whereBetween('created_at',[Carbon::parse($req->from)->format('Y-m-d 00:00:00'),Carbon::parse($req->to)->format('Y-m-d 23:59:59')])->get();
     }
 
 }
