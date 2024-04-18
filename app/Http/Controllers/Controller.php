@@ -14,7 +14,8 @@ use Illuminate\Routing\Controller as BaseController;
  *     @OA\Info(
  *         version="1.0.0",
  *         title="API TASK CALENDAR",
- *         description="Nossa **API** oferece as principais funcionalidades para o fluxo de uma tarefa",
+ *         description="Nossa **API** oferece as principais funcionalidades para o fluxo de uma tarefa. <br/>
+Trabalhando com a segurança de autenticação para o input e retorno dos dados, você precisa colocar no campo **Authorization** o token gerado quando efetua o login ",
  *         @OA\Contact(
  *             email="rafael.frotac@gmail.com"
  *         ),
