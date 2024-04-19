@@ -845,4 +845,17 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function delete(Request $request)
+    {
+        try {
+            $users = new User();
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

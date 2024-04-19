@@ -32,12 +32,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/tasksnetweendates',               [TaskController::class, 'tasksBetweenDates']);
     Route::post('/tasksfiltersearch',               [TaskController::class, 'tasksFilterSearch']);
     Route::patch('/task/update',                    [TaskController::class, 'update']);
-    Route::post('/task/{task}/finished',            [TaskController::class,'finished']);
+    Route::post('/task/{task}/finished',            [TaskController::class, 'finished']);
+    Route::delete('/task/{task}',                   [TaskController::class, 'delete']);
 
     Route::patch('/user/update',                    [UserController::class, 'updateUser']);
     Route::get('/user',                             [UserController::class, 'user']);
     Route::get('/users',                            [UserController::class, 'users']);
     Route::post('/usersfiltersearch',               [UserController::class, 'usersFilterSearch']);
     Route::post('/logout',                          [UserController::class, 'logout']);
+    Route::delete('/user/{user}',                   [TaskController::class, 'delete']);
 
 });
