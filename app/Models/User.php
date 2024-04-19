@@ -38,13 +38,7 @@ use Laravel\Sanctum\HasApiTokens;
  *         type="string",
  *         description="Senha do usuário",
  *         example="josedasilva@gmail.com"
- *     ),
- * 	@OA\Property(
- *         property="created_at",
- *         type="string",
- *         description="Datetime de criação do usuário",
- *         example="2024-04-16 02:24:57"
- *     ),
+ *     )
  * )
  */
 
