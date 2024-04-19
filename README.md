@@ -1,5 +1,5 @@
 
-# Tast Manger com Laravel e Swagger
+# Tast Manager com Laravel e Swagger
 
 Objetivo: O desafio é desenvolver um sistema de gerenciamento de tarefas.
 
