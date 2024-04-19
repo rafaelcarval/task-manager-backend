@@ -633,7 +633,7 @@ class TaskController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Patch(
      *     path="/api/task/update",
      *     tags={"Tarefas"},
      *     operationId="updateTask",
